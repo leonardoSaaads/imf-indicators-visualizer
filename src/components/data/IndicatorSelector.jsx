@@ -6,6 +6,15 @@ import { Button } from '../ui/Button';
 import { LoadingSpinner } from '../ui/LoadingSpinner';
 import { Alert } from '../ui/Alert';
 
+// Indicadores populares por categoria
+const popularIndicators = {
+  gdp: ['NGDPD', 'NGDPDPC', 'NGDP_RPCH', 'NGDPRPPPPC'],
+  population: ['LP', 'LUR'],
+  finance: ['GGXWDG_NGDP', 'GGR_NGDP', 'GGX_NGDP'],
+  trade: ['BCA_NGDPD', 'TX_RPCH', 'TM_RPCH'],
+  reserves: ['ENDA_NGDPD', 'FI_RES_TOT_CD']
+};
+
 export const IndicatorSelector = ({ value, onChange, className = '' }) => {
   const { indicators, loading, error } = useIndicators();
   const [searchTerm, setSearchTerm] = useState('');
@@ -19,15 +28,6 @@ export const IndicatorSelector = ({ value, onChange, className = '' }) => {
     population: 'População',
     finance: 'Financeiro',
     trade: 'Comércio'
-  };
-
-  // Indicadores populares por categoria
-  const popularIndicators = {
-    gdp: ['NGDPD', 'NGDPDPC', 'NGDP_RPCH', 'NGDPRPPPPC'],
-    population: ['LP', 'LUR'],
-    finance: ['GGXWDG_NGDP', 'GGR_NGDP', 'GGX_NGDP'],
-    trade: ['BCA_NGDPD', 'TX_RPCH', 'TM_RPCH'],
-    reserves: ['ENDA_NGDPD', 'FI_RES_TOT_CD']
   };
 
   const filteredSuggestions = useMemo(() => {

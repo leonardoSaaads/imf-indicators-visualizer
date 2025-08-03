@@ -23,12 +23,6 @@ export const PeriodSelector = ({ value = [], onChange, className = '' }) => {
     onChange(years);
   };
 
-  const addSingleYear = (year) => {
-    if (!value.includes(year)) {
-      onChange([...value, year].sort());
-    }
-  };
-
   const removeYear = (yearToRemove) => {
     onChange(value.filter(year => year !== yearToRemove));
   };
