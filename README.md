@@ -65,8 +65,8 @@ Siga os passos abaixo para executar o projeto em seu ambiente de desenvolvimento
 1.  **Clone o repositório:**
 
     ```bash
-    git clone https://github.com/leonardosaaads/imf-data-visualizer
-    cd imf-data-visualizer
+    git clone https://github.com/leonardoSaaads/imf-indicators-visualizer
+    cd imf-indicators-visualizer
     ```
 
 2.  **Instale as dependências:**
