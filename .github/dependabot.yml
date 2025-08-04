@@ -1,0 +1,62 @@
+version: 2
+updates:
+  # Monitoramento de dependências npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "leonardoSaaads"  # Substitua pelo seu username do GitHub
+    assignees:
+      - "leonardoSaaads"  # Substitua pelo seu username do GitHub
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "automated"
+    ignore:
+      # Ignora atualizações patch para algumas dependências críticas
+      - dependency-name: "react"
+        update-types: ["version-update:semver-patch"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-patch"]
+    groups:
+      # Agrupa atualizações relacionadas ao React
+      react-ecosystem:
+        patterns:
+          - "react*"
+          - "@types/react*"
+      # Agrupa ferramentas de desenvolvimento
+      dev-tools:
+        patterns:
+          - "eslint*"
+          - "vite*"
+          - "@vitejs/*"
+        update-types:
+          - "minor"
+          - "patch"
+      # Agrupa dependências do Tailwind
+      tailwind-ecosystem:
+        patterns:
+          - "tailwindcss*"
+          - "@tailwindcss/*"
+
+  # Monitoramento de GitHub Actions (caso você adicione workflows futuramente)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 2
+    reviewers:
+      - "leonardoSaaads"  # Substitua pelo seu username do GitHub
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    labels:
+      - "github-actions"
+      - "automated"

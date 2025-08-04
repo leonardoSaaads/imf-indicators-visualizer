@@ -1,0 +1,46 @@
+name: Auto-merge Dependabot PRs
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run linting
+        run: npm run lint
+      
+      - name: Build project
+        run: npm run build
+      
+      - name: Auto-merge minor and patch updates
+        if: |
+          contains(github.event.pull_request.title, 'deps:') ||
+          contains(github.event.pull_request.title, 'deps-dev:')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Verifica se é uma atualização minor ou patch
+          if [[ "${{ github.event.pull_request.title }}" =~ (minor|patch) ]]; then
+            gh pr review --approve "${{ github.event.pull_request.number }}"
+            gh pr merge --auto --squash "${{ github.event.pull_request.number }}"
+          fi
